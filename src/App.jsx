@@ -6,7 +6,7 @@ import ContactRow from './components/ContactRow';
 function App() {
   const initialContacts = contacts.slice(0, 5);
   const [displayedContacts, setDisplayedContacts] = useState(initialContacts);
-  const remainingContacts = contacts.slice(5);
+  const [remainingContacts, setRemainingContacts] = useState(contacts.slice(5));
 
   const addRandomContact = () => {
     if (remainingContacts.length === 0) {
@@ -21,10 +21,12 @@ function App() {
       addRandomContact();
       return;
     }
-  
-    const updatedContacts = [...displayedContacts, randomContact];
-    setDisplayedContacts(updatedContacts);
-  };
+
+    setDisplayedContacts(prevContacts => [...prevContacts, randomContact]);
+
+    const updatedRemainingContacts = remainingContacts.filter(contact => contact.id !== randomContact.id);
+    setRemainingContacts(updatedRemainingContacts);
+  }
   
 
   const sortByName = () => {
